@@ -81,23 +81,6 @@
             "browserTarget": "calculator-app:build"
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/calculator-app/src/test.ts",
-            "polyfills": "projects/calculator-app/src/polyfills.ts",
-            "tsConfig": "projects/calculator-app/tsconfig.spec.json",
-            "karmaConfig": "projects/calculator-app/karma.conf.js",
-            "assets": [
-              "projects/calculator-app/src/favicon.ico",
-              "projects/calculator-app/src/assets"
-            ],
-            "styles": [
-              "projects/calculator-app/src/styles.scss"
-            ],
-            "scripts": []
-          }
-        },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
