@@ -1,1 +1,10 @@
-<p>command-panel works!</p>
+<section class="command-panel">
+  <button
+    class="command-panel__button command-panel__button--condensed"
+    type="button"
+    *ngFor="let cmd of commands"
+  >{{ cmd }}</button>
+  <button class="command-panel__button" type="button">Rand</button>
+  <button class="command-panel__button" type="reset">Clear</button>
+  <button class="command-panel__button" type="submit">=</button>
+</section>

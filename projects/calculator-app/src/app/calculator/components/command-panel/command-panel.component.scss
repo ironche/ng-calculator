@@ -1,0 +1,33 @@
+.command-panel {
+  display: flex;
+  flex-wrap: wrap;
+
+  &__button {
+    flex-grow: 1;
+    border-width: 0;
+    border-top: 1px solid #555555;
+    text-transform: uppercase;
+    line-height: 2;
+    background-color: #333333;
+    color: white;
+    transition: background-color 300ms;
+    cursor: pointer;
+    outline: none;
+    font-family: inherit;
+    font-size: inherit;
+
+    &:hover {
+      background-color: #444444;
+    }
+
+    &:active {
+      background-color: #555555;
+    }
+
+    &--condensed {
+      flex-basis: 20%;
+      border: none;
+      text-transform: lowercase;
+    }
+  }
+}

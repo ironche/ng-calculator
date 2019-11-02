@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-command-panel',
   templateUrl: './command-panel.component.html',
   styleUrls: ['./command-panel.component.scss']
 })
-export class CommandPanelComponent implements OnInit {
+export class CommandPanelComponent {
 
-  constructor() { }
-
-  ngOnInit() {
-  }
+  readonly commands: string[] = [
+    '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
+    '.', '+', '-', '*', '/',
+    'sin', 'cos', 'tan', '(', ')'
+  ];
 
 }
