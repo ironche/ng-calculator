@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CalculatorComponent } from './calculator.component';
 import { ExpressionDisplayComponent } from './components/expression-display/expression-display.component';
 import { HistoryDisplayComponent } from './components/history-display/history-display.component';
@@ -11,6 +12,9 @@ describe('CalculatorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        ReactiveFormsModule
+      ],
       declarations: [
         ExpressionDisplayComponent,
         HistoryDisplayComponent,
@@ -30,5 +34,13 @@ describe('CalculatorComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should update expression value', () => {
+    const expressionCtrl = component.calculatorForm.get('expression');
+    component.updateExpressionValue('1');
+    component.updateExpressionValue('2');
+    component.updateExpressionValue('3');
+    expect(expressionCtrl.value).toBe('123');
   });
 });

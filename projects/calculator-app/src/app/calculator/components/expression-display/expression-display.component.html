@@ -1,3 +1,8 @@
 <section class="expression-display">
-  <input type="text" placeholder="0">
+  <input
+    type="text"
+    placeholder="0"
+    [value]="value"
+    (input)="writeValue($event.target.value)"
+  >
 </section>

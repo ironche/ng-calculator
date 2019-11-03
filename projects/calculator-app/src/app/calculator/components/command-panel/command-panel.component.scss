@@ -23,6 +23,10 @@
     &:active {
       background-color: #555555;
     }
+    
+    &:last-child {
+      border-right: 1px solid #555555;;
+    }
 
     &--condensed {
       flex-basis: 20%;

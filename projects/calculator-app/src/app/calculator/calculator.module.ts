@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CalculatorRoutingModule } from './calculator-routing.module';
 import { ExpressionDisplayComponent } from './components/expression-display/expression-display.component';
 import { HistoryDisplayComponent } from './components/history-display/history-display.component';
@@ -17,6 +18,7 @@ import { CalculatorComponent } from './calculator.component';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     CalculatorRoutingModule
   ]
 })

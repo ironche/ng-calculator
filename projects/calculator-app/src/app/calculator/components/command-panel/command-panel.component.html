@@ -1,8 +1,9 @@
 <section class="command-panel">
   <button
+    *ngFor="let cmd of commands"
     class="command-panel__button command-panel__button--condensed"
     type="button"
-    *ngFor="let cmd of commands"
+    (click)="onClick(cmd)"
   >{{ cmd }}</button>
   <button class="command-panel__button" type="button">Rand</button>
   <button class="command-panel__button" type="reset">Clear</button>

@@ -1,6 +1,15 @@
-<form class="calculator">
+<form class="calculator" [formGroup]="calculatorForm">
   <app-history-display></app-history-display>
-  <app-expression-display></app-expression-display>
+
+  <app-expression-display
+    formControlName="expression"
+  ></app-expression-display>
+
   <app-error-display></app-error-display>
-  <app-command-panel></app-command-panel>
+
+  <app-command-panel
+    (commandClick)="updateExpressionValue($event)"
+  ></app-command-panel>
+
+  <pre>calculatorForm: {{ calculatorForm.value | json }}</pre>
 </form>
