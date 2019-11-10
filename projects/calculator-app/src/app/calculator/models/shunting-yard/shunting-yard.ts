@@ -3,90 +3,78 @@ import { Operator } from './operator';
 export class ShuntingYard {
   private operators: { [name: string]: Operator } = {};
   private functions: { [name: string]: Operator } = {};
-
-  log(): void {
-    console.log(this.operators);
-  }
+  private operatorMasks: string[] = [];
+  private functionMasks: string[] = [];
+  private numberMasks: string[] = [`\\d+\\.?\\d+`, `\\d`];
+  private parenthesesMasks: string[] = [`\\(`, `\\)`];
+  private tokenMasks: RegExp;
 
   addFunction(func: Operator): void {
     this.functions[func.name] = func;
-    this.operators[func.name] = func;
+    this.functionMasks.push(func.name);
   }
 
   addOperator(operator: Operator): void {
     this.operators[operator.name] = operator;
+    this.operatorMasks.push(operator.name.replace(/(\+|\-|\*|\/)/g, `\\$1`));
   }
 
-  parse(expression: string): string[] {
-    const output: string[] = [];
-    const stack: string[] = [];
-    let sign: string;
-    let lastToken: string;
-    let token: string;
-
-    for (let i = 0, len = expression.length; i < len; i++) {
-      token = expression[i];
-      if (token === ' ') {
-        continue; // ignore spaces
-      }
-      if (sign) {
-        sign += token;
-        token = sign;
-        sign = null;
-      }
-      if (this.isLeftParenthesis(token)) {
-        stack.push(token);
-      } else if (this.isFunction(token)) {
-        stack.push(token);
-      } else if (this.isRightParenthesis(token)) {
-        let operator;
-        while ((operator = stack.pop()) && !this.isLeftParenthesis(operator)) {
-          if (!this.isFunction(operator)) {
-            output.push(operator);
+  parse(expression: string, output: string[] = [], operators: string[] = []): string[] {
+    if (expression) {
+      const token = this.getNextToken(expression);
+      if (token) {
+        if (this.isFunction(token)) {
+          operators.push(token);
+        } else if (this.isLeftParenthesis(token)) {
+          operators.push(token);
+        } else if (this.isRightParenthesis(token)) {
+          let operator = this.top(operators);
+          while (operator && !this.isLeftParenthesis(operator)) {
+            output.push(operators.pop());
+            operator = this.top(operators);
           }
-        }
-        if (typeof operator === 'undefined') {
-          throw new Error('Mismatched right parenthesis');
-        }
-      } else if (this.isOperator(token)) {
-        if (!lastToken || lastToken === '(') {
-          sign = token;
-          continue;
-        }
-        while (stack.length) {
-          const thisOperator = this.operators[token];
-          const operator = this.operators[stack[stack.length - 1]];
-          if (!operator || !thisOperator) {
-            break;
+          if (this.isLeftParenthesis(operator)) {
+            operator = operators.pop();
           }
-          if (
-            (thisOperator.hasLeftAssociativity() && thisOperator.isLessOrEqual(operator))
-            || thisOperator.isLess(operator)
+          if (!operator) {
+            throw new Error('Unmatched right parenthesis');
+          }
+        } else if (this.isOperator(token)) {
+          let operator = this.top(operators);
+          while (
+            operator
+            && !this.isLeftParenthesis(operator)
+            && (
+              this.isFunction(operator)
+              || this.operators[operator].isGreater(this.operators[token])
+              || (
+                this.operators[operator].isEqual(this.operators[token])
+                && this.operators[operator].hasLeftAssociativity()
+              )
+            )
           ) {
-            output.push(stack.pop());
-          } else {
-            break;
+            output.push(operators.pop());
+            operator = this.top(operators);
           }
-        }
-        stack.push(token);
-      } else {
-        if (!lastToken || this.isLeftParenthesis(lastToken) || this.isOperator(lastToken)) {
-          output.push(token);
+          operators.push(token);
         } else {
-          output[output.length - 1] += token;
+          // token is number
+          output.push(token);
         }
+        // continue to next token
+        this.parse(expression.slice(token.length), output, operators);
+      } else {
+        throw new Error('Unknown token');
       }
-      lastToken = token;
-    }
-
-    while (stack.length) {
-      token = stack.pop()
-      if (this.isLeftParenthesis(token)) {
-        throw new Error('Mismatched left parenthesis');
+    } else {
+      while (operators.length) {
+        const operator = this.top(operators);
+        if (this.isLeftParenthesis(operator)) {
+          throw new Error('Unmatched left parenthesis');
+        }
+        output.push(operators.pop());
       }
-      output.push(token);
     }
-
     return output;
   }
 
@@ -94,12 +82,10 @@ export class ShuntingYard {
     const stack = [];
 
     for (let i = 0, len = arr.length; i < len; i++) {
-      const op = this.operators[arr[i]];
+      const op = this.operators[arr[i]] || this.functions[arr[i]];
       if (op) {
-        console.log(op.name, op.paramsCount, stack);
         stack.push(op.method(...stack.splice(-op.paramsCount)));
       } else {
-        console.log(stack);
         stack.push(parseFloat(arr[i]));
       }
     }
@@ -111,19 +97,37 @@ export class ShuntingYard {
     return this.resolveRpn(this.parse(expression));
   }
 
-  private isLeftParenthesis(token: any): boolean {
+  private isLeftParenthesis(token: string): boolean {
     return token === '(';
   }
 
-  private isRightParenthesis(token: any): boolean {
+  private isRightParenthesis(token: string): boolean {
     return token === ')';
   }
 
-  private isOperator(token: any): boolean {
-    return Object.keys(this.operators).includes(token) && !this.isFunction(token);
+  private isOperator(token: string): boolean {
+    return Object.keys(this.operators).includes(token);
   }
 
-  private isFunction(token: any): boolean {
+  private isFunction(token: string): boolean {
     return Object.keys(this.functions).includes(token);
+  }
+
+  private getNextToken(expression: string): string {
+    if (!this.tokenMasks) {
+      const masks = [
+        ...this.operatorMasks,
+        ...this.functionMasks,
+        ...this.numberMasks,
+        ...this.parenthesesMasks
+      ].join('|');
+      this.tokenMasks = new RegExp(`^(${masks})`, '');
+    }
+    const res = expression.match(this.tokenMasks);
+    return res ? res[0] : null;
+  }
+
+  private top(stack: string[] = []) {
+    return stack.length ? stack[stack.length - 1] : null;
   }
 }
