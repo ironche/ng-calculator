@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { RandomService } from '../../services/random/random.service';
 
 @Component({
   selector: 'app-command-panel',
@@ -15,7 +16,13 @@ export class CommandPanelComponent {
     '(', ')'
   ];
 
+  constructor(private randomService: RandomService) { }
+
   onClick(cmd: string): void {
     this.commandClick.emit(cmd);
+  }
+
+  fetchRandomNumber(): void {
+    this.randomService.next().subscribe(val => this.onClick(val));
   }
 }

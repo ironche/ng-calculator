@@ -1,13 +1,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommandPanelComponent } from './command-panel.component';
+import { RandomService } from '../../services/random/random.service';
+import { RandomServiceMock } from '../../services/random/random.service.mock';
 
-describe('CommandPanelComponent', () => {
+fdescribe('CommandPanelComponent', () => {
   let component: CommandPanelComponent;
   let fixture: ComponentFixture<CommandPanelComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CommandPanelComponent]
+      declarations: [CommandPanelComponent],
+      providers: [
+        { provide: RandomService, useClass: RandomServiceMock }
+      ]
     })
     .compileComponents();
   }));
@@ -18,7 +23,7 @@ describe('CommandPanelComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  fit('should create', () => {
     expect(component).toBeTruthy();
   });
 

@@ -5,7 +5,11 @@
     type="button"
     (click)="onClick(cmd)"
   >{{ cmd }}</button>
-  <button class="command-panel__button" type="button">Rand</button>
+  <button
+    class="command-panel__button"
+    type="button"
+    (click)="fetchRandomNumber()"
+  >Rand</button>
   <button class="command-panel__button" type="reset">Clear</button>
   <button class="command-panel__button" type="submit">=</button>
 </section>

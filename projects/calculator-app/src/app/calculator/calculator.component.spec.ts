@@ -5,6 +5,7 @@ import { ExpressionDisplayComponent } from './components/expression-display/expr
 import { HistoryDisplayComponent } from './components/history-display/history-display.component';
 import { ErrorDisplayComponent } from './components/error-display/error-display.component';
 import { CommandPanelComponent } from './components/command-panel/command-panel.component';
+import { ExpressionService } from './services/expression/expression.service';
 
 describe('CalculatorComponent', () => {
   let component: CalculatorComponent;
@@ -21,6 +22,9 @@ describe('CalculatorComponent', () => {
         ErrorDisplayComponent,
         CommandPanelComponent,
         CalculatorComponent
+      ],
+      providers: [
+        ExpressionService
       ]
     })
     .compileComponents();
@@ -37,10 +41,9 @@ describe('CalculatorComponent', () => {
   });
 
   it('should update expression value', () => {
-    const expressionCtrl = component.calculatorForm.get('expression');
     component.updateExpressionValue('1');
     component.updateExpressionValue('2');
     component.updateExpressionValue('3');
-    expect(expressionCtrl.value).toBe('123');
+    expect(component.input.value).toBe('123');
   });
 });

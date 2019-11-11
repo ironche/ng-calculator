@@ -9,17 +9,17 @@ import { CommandPanelComponent } from './components/command-panel/command-panel.
 import { CalculatorComponent } from './calculator.component';
 
 @NgModule({
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    CalculatorRoutingModule
+  ],
   declarations: [
     ExpressionDisplayComponent,
     HistoryDisplayComponent,
     ErrorDisplayComponent,
     CommandPanelComponent,
     CalculatorComponent
-  ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    CalculatorRoutingModule
   ]
 })
 export class CalculatorModule { }
