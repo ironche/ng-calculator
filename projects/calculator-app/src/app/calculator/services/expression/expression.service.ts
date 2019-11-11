@@ -23,8 +23,9 @@ export class ExpressionService {
       { name: '/', precedence: 2, method: (a, b) => a / b } as Operator
     ));
 
+    const degToRad = Math.PI / 180;
     const trig = { precedence: 1, associativity: Associativity.RIGHT, paramsCount: 1 };
-    const calc = (fn, a) => Math.round(fn(a) * 100) / 100;
+    const calc = (fn, a) => Math.round(fn(a * degToRad) * 100) / 100;
 
     this.shuntingYard.addFunction(new Operator(
       Object.assign({ name: 'sin', method: (a) => calc(Math.sin, a) }, trig) as Operator
