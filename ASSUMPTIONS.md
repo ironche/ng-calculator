@@ -21,4 +21,13 @@ sin(x) // returns sin(30 * PI / 180 deg), which is 0.5
 
 ```
 
+- Use dot for floating point (not comma)
+```js
+// DON'T
+10,987
+
+// DO
+10.987
+```
+
 - Spaces in expression are not permitted

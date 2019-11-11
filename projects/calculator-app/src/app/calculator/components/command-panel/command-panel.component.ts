@@ -10,9 +10,11 @@ export class CommandPanelComponent {
   @Output() commandClick = new EventEmitter<string>();
 
   readonly commands: string[] = [
-    '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
-    '.', '+', '-', '*', '/',
-    'pos', 'neg', 'sin', 'cos', 'tan',
+    '1', '2', '3', '4',
+    '5', '6', '7', '8',
+    '9', '0', 'pos', 'neg',
+    '+', '-', '*', '/',
+    '.', 'sin', 'cos', 'tan',
     '(', ')'
   ];
 

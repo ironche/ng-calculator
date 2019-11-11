@@ -17,9 +17,8 @@ Features:
 
 Examples:
 ```js
-1/0 = Infinity
 neg(2)*3 = -6
-pos(2) = 2
+pos(2.34) = 2.34
 7*(1-2)-21/3 = -14
 sin(0)+cos(0) = 1
 sin(30) = 0.5
