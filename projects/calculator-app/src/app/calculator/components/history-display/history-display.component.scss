@@ -1,17 +1,30 @@
 .history-display {
-  textarea {
-    padding: 15px 15px 0;
+  &__list {
+    margin: 0;
+    list-style: none;
+    padding: 1em 1em 0;
     box-sizing: border-box;
-    width: 100%;
-    border: none;
-    outline: none;
-    font-family: inherit;
-    font-size: inherit;
-    resize: none;
-    display: block;
     text-align: right;
     color: #999999;
     border: 1px solid #333333;
     border-width: 1px 1px 0;
+    height: 7em;
+    overflow: scroll;
+  }
+
+  &-item {
+    display: flex;
+
+    &__expression {
+      flex-grow: 1;
+    }
+
+    &__equal {
+      padding: 0 0.5em;
+    }
+
+    &__result {
+      color: #008800;
+    }
   }
 }

@@ -1,15 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { History } from '../../models/history';
 
 @Component({
   selector: 'app-history-display',
   templateUrl: './history-display.component.html',
   styleUrls: ['./history-display.component.scss']
 })
-export class HistoryDisplayComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+export class HistoryDisplayComponent {
+  @Input() history: History[] = [];
 }

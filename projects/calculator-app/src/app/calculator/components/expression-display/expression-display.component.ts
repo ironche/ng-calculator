@@ -34,10 +34,8 @@ export class ExpressionDisplayComponent implements ControlValueAccessor {
 
   writeValue(value: string): void {
     const newValue = value || '';
-    if (this.value !== newValue) {
-      this.value = newValue;
-      this.onChangeCallback(newValue);
-      this.onTouchedCallback();
-    }
+    this.value = newValue;
+    this.onChangeCallback(newValue);
+    this.onTouchedCallback();
   }
 }

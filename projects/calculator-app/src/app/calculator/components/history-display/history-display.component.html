@@ -1,3 +1,18 @@
 <section class="history-display">
-  <textarea rows="5" readonly></textarea>
+  <ol class="history-display__list">
+    <li
+      class="history-display-item"
+      *ngFor="let h of history.reverse()"
+    >
+      <span class="history-display-item__expression">
+        {{ h.expression }}
+      </span>
+      <span class="history-display-item__equal">
+        =
+      </span>
+      <strong class="history-display-item__result">
+        {{ h.result }}
+      </strong>
+    </li>
+  </ol>
 </section>

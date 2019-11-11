@@ -1,15 +1,10 @@
-<form class="calculator" [formGroup]="calculatorForm">
-  <app-history-display></app-history-display>
-
-  <app-expression-display
-    formControlName="expression"
-  ></app-expression-display>
-
-  <app-error-display></app-error-display>
-
-  <app-command-panel
-    (commandClick)="updateExpressionValue($event)"
-  ></app-command-panel>
-
-  <pre>calculatorForm: {{ calculatorForm.value | json }}</pre>
+<form
+  class="calculator"
+  [formGroup]="calculatorForm"
+  (ngSubmit)="onSubmit()"
+>
+  <app-history-display [history]="history"></app-history-display>
+  <app-expression-display formControlName="expression"></app-expression-display>
+  <app-error-display [error]="error"></app-error-display>
+  <app-command-panel (commandClick)="updateExpressionValue($event)"></app-command-panel>
 </form>
