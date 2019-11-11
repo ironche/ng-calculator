@@ -20,6 +20,10 @@ export class Operator {
     if (!this.paramsCount) {
       this.paramsCount = 2;
     }
+
+    if (!this.precedence) {
+      this.precedence = 1;
+    }
   }
 
   isGreater(op: Operator): boolean {

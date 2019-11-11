@@ -90,6 +90,10 @@ export class ShuntingYard {
       }
     }
 
+    if (isNaN(stack[0])) {
+      throw new Error('Result is not a number');
+    }
+
     return stack[0];
   }
 

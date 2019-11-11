@@ -3,9 +3,8 @@
   flex-wrap: wrap;
 
   &__button {
-    flex-grow: 1;
+    flex-basis: 50%;
     border-width: 0;
-    border-top: 1px solid #555555;
     text-transform: uppercase;
     line-height: 2;
     background-color: #333333;
@@ -25,11 +24,20 @@
     }
     
     &:last-child {
-      border-right: 1px solid #555555;;
+      background-color: #006666;
+      border-right: 1px solid #008888;
+
+      &:hover {
+        background-color: #007777;
+      }
+
+      &:active {
+        background-color: #008888;
+      }
     }
 
     &--condensed {
-      flex-basis: 20%;
+      flex-basis: 25%;
       border: none;
       text-transform: lowercase;
     }

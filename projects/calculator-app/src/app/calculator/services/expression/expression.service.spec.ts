@@ -84,4 +84,12 @@ describe('ExpressionService', () => {
     expression = '10+2)';
     expect(() => service.resolve(expression)).toThrowError('Unmatched right parenthesis');
   });
+
+  it('should resolve expression with signed numbers', () => {
+    expression = 'pos(2)-neg(3)';
+    parsed = service.parse(expression);
+    resolved = service.resolve(expression);
+    expect(parsed).toEqual(['2', 'pos', '3', 'neg', '-']);
+    expect(resolved).toBe(5); // +2-(-3) == -2+3 == 1
+  });
 });

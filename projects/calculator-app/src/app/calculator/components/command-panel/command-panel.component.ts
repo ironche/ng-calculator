@@ -11,7 +11,8 @@ export class CommandPanelComponent {
   readonly commands: string[] = [
     '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
     '.', '+', '-', '*', '/',
-    'sin', 'cos', 'tan', '(', ')'
+    'pos', 'neg', 'sin', 'cos', 'tan',
+    '(', ')'
   ];
 
   onClick(cmd: string): void {
